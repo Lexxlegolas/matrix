@@ -1,9 +1,10 @@
-package com.example.matrix
+package com.example.matrix.Controller
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.example.matrix.R
 
 class LoginActivity : AppCompatActivity() {
 
@@ -18,7 +19,7 @@ class LoginActivity : AppCompatActivity() {
     }
     fun loginCreateUserBtnClicked(view: View)
     {
-        val create = Intent(this,CreateUserActivity::class.java)
+        val create = Intent(this, CreateUserActivity::class.java)
         startActivity(create)
     }
 }
