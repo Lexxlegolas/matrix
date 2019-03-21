@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import com.example.matrix.R
 import com.example.matrix.Services.AuthService
+import com.example.matrix.Utilities.UserDataService
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
@@ -56,6 +57,7 @@ class CreateUserActivity : AppCompatActivity() {
 
     fun createUserClicked(view: View)
     {
+        val userName = createUserName.text.toString()
         val email = createEmail.text.toString()
         val password = createPassword.text.toString()
         AuthService.registerUser(this,email, password){registerSuccess ->
@@ -64,8 +66,12 @@ class CreateUserActivity : AppCompatActivity() {
                 AuthService.loginUser(this, email ,password){loginSuccess ->
                     if (loginSuccess)
                     {
-                        println(AuthService.authToken)
-                        println(AuthService.userEmail)
+                        AuthService.createUser(this, userName,email, avatarColor, userAvatar){createSuccess ->
+                            if (createSuccess)
+                            {
+                                finish()
+                            }
+                        }
                     }
                 }
             }
