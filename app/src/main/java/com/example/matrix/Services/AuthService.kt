@@ -9,7 +9,6 @@ import com.android.volley.toolbox.Volley
 import com.example.matrix.Utilities.URL_CREATE_USER
 import com.example.matrix.Utilities.URL_LOGIN
 import com.example.matrix.Utilities.URL_REGISTER
-import com.example.matrix.Utilities.UserDataService
 import org.json.JSONException
 import org.json.JSONObject
 

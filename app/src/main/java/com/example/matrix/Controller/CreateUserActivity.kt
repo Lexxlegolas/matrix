@@ -10,7 +10,6 @@ import android.widget.Toast
 import com.example.matrix.R
 import com.example.matrix.Services.AuthService
 import com.example.matrix.Utilities.BROADCAST_USER_DATA_CHANGE
-import com.example.matrix.Utilities.UserDataService
 import kotlinx.android.synthetic.main.activity_create_user.*
 import java.util.*
 
