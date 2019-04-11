@@ -15,12 +15,16 @@ import com.example.matrix.R
 import com.example.matrix.Services.AuthService
 import com.example.matrix.Utilities.BROADCAST_USER_DATA_CHANGE
 import com.example.matrix.Services.UserDataService
+import com.example.matrix.Utilities.SOCKET_URL
+import io.socket.client.IO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity()
 {
+    val socket = IO.socket(SOCKET_URL)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -33,10 +37,28 @@ class MainActivity : AppCompatActivity()
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-        hideKeyBoard()
 
+
+
+
+    }
+
+
+    override fun onResume() {
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(
             BROADCAST_USER_DATA_CHANGE))
+        socket.connect()
+        super.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
+    }
+
+    override fun onDestroy() {
+        socket.disconnect()
+        super.onDestroy()
 
     }
 
@@ -102,13 +124,15 @@ class MainActivity : AppCompatActivity()
                     val channelDesc = descTextField.text.toString()
 
                     //create channel
-                    hideKeyBoard()
+
+                    socket.emit("newChannel", channelName, channelDesc)
+
                 }
                 .setNegativeButton("Cancel")
                 {
                     dialogInterface, i ->
                     //cancel and close the dialog
-                    hideKeyBoard()
+
                 }
                 .show()
         }
@@ -116,7 +140,7 @@ class MainActivity : AppCompatActivity()
 
     fun sendMsgBtnClicked(view: View)
     {
-
+        hideKeyBoard()
     }
 
     fun hideKeyBoard()
